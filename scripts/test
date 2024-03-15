@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# Exit immediately if any command fails or if unset variables are used.
+set -euo pipefail
+
+# Include configuration and utility files.
+script_dir="$(cd "${BASH_SOURCE[0]%/*}" && pwd)"
+source "${script_dir}/test_utilities.sh"
+
+# Main script.
+script_name=$(basename "$0")
+
+setup_signal_handling
+
+check_dependencies
+
+echo "Starting ${script_name} script..."
+
+parse_command_line_arguments "$@"
+
+run_tests
+
+echo "${script_name} script completed successfully."
