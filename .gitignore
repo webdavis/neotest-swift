@@ -6,3 +6,9 @@ Session.vim
 
 # Mac OS Finder metadata.
 .DS_Store
+
+# Ignore lua-language-server configuration file.
+.luarc.json
+
+# Ignore test log file.
+test_output.txt
