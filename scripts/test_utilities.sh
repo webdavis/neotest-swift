@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 PROJECT_ROOT="$(dirname "$(cd "${BASH_SOURCE[0]%/*}" && pwd)")"
-VIM_INIT_FILE="${PROJECT_ROOT}/tests/init.vim"
+MINIMAL_INIT_FILE="${PROJECT_ROOT}/scripts/minimal_init.lua"
 LOG_FILE="${PROJECT_ROOT}/test_output.txt"
 
 function setup_signal_handling() {
@@ -68,14 +68,14 @@ function parse_command_line_arguments() {
     test_scope="${PROJECT_ROOT}/tests/plenary"
   fi
   if [[ -z $plenary_options ]]; then
-    plenary_options="{ minimal_init = '$VIM_INIT_FILE' }"
+    plenary_options="{ minimal_init = '$MINIMAL_INIT_FILE' }"
   fi
 
   NVIM_COMMAND="PlenaryBustedDirectory ${test_scope} ${plenary_options}"
 }
 
 function run_tests() {
-  nvim --headless --noplugin -u "$VIM_INIT_FILE" -c "$NVIM_COMMAND" | tee "$LOG_FILE"
+  nvim --headless --noplugin -u "$MINIMAL_INIT_FILE" -c "$NVIM_COMMAND" | tee "$LOG_FILE"
 }
 
 # Plenary doesn't emit exit code 1 when tests have errors during setup.
