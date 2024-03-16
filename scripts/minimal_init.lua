@@ -1,3 +1,5 @@
+-- Credit: https://github.com/nvim-neotest/neotest-go/pull/71
+
 -- This script creates a separate XDG path which avoids Lazy.nvim taking control of the
 -- loading.
 local M = {}
