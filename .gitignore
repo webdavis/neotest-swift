@@ -12,3 +12,6 @@ Session.vim
 
 # Ignore test log file.
 test_output.txt
+
+# Ignore local Neovim plugin downloads.
+.tests
