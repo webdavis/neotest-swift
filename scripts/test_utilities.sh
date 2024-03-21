@@ -65,8 +65,18 @@ function parse_command_line_arguments() {
   done
 
   if [[ -z $test_scope ]]; then
-    test_scope="${PROJECT_ROOT}/tests/plenary"
+    test_scope="${PROJECT_ROOT}/tests/"
+    if [[ ! -d $test_scope ]]; then
+      echo "Test path does not exist: ${test_scope}" >&2
+      exit 1
+    fi
+
+    if ! find "$test_scope" -name "*_spec.lua" -print -quit | read -r; then
+      echo "No test files detected in $test_scope" >&2
+      exit 1
+    fi
   fi
+
   if [[ -z $plenary_options ]]; then
     plenary_options="{ minimal_init = '$MINIMAL_INIT_FILE' }"
   fi
