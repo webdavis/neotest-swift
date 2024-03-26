@@ -6,6 +6,8 @@ set -euo pipefail
 # Main script.
 function main() {
   # Include configuration and utility files.
+  local script_dir script_name
+
   script_dir="$(cd "${BASH_SOURCE[0]%/*}" && pwd)"
   source "${script_dir}/test_utilities.sh"
 
