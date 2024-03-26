@@ -3,21 +3,31 @@
 # Exit immediately if any command fails or if unset variables are used.
 set -euo pipefail
 
-# Main script.
-function main() {
-  # Include configuration and utility files.
-  local script_dir
+script_name_variable="$(basename "$0")"
+readonly SCRIPT_NAME="$script_name_variable"
 
+function starting_script() {
+  echo "Starting ${SCRIPT_NAME} script..."
+}
+
+function ending_script() {
+  echo "${SCRIPT_NAME} script completed successfully."
+}
+
+function source_utilities() {
+  local script_dir
   script_dir="$(cd "${BASH_SOURCE[0]%/*}" && pwd)"
   source "${script_dir}/test_utilities.sh"
+}
+
+function main() {
+  source_utilities
 
   setup_signal_handling
 
   check_dependencies
 
-  local script_name
-  script_name=$(basename "$0")
-  echo "Starting ${script_name} script..."
+  starting_script
 
   readonly ARGS=( "$@" )
 
@@ -29,7 +39,7 @@ function main() {
 
   run_tests
 
-  echo "${script_name} script completed successfully."
+  ending_script
 }
 
 main "$@"
