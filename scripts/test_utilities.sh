@@ -38,12 +38,13 @@ function check_dependencies() {
 }
 
 function parse_command_line_arguments() {
-  short='o:s:'
-  long='options:,scope:'
+  local short='o:s:'
+  local long='options:,scope:'
 
-  OPTIONS="$(getopt -o "$short" --long "$long" -- "$@")"
+  local options
+  options="$(getopt -o "$short" --long "$long" -- "$@")"
 
-  eval set -- "$OPTIONS"
+  eval set -- "$options"
 
   local test_scope plenary_options
 
