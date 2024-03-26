@@ -3,21 +3,42 @@
 # Exit immediately if any command fails or if unset variables are used.
 set -euo pipefail
 
-# Include configuration and utility files.
-script_dir="$(cd "${BASH_SOURCE[0]%/*}" && pwd)"
-source "${script_dir}/test_utilities.sh"
+script_name_variable="$(basename "$0")"
+readonly SCRIPT_NAME="$script_name_variable"
+readonly ARGS=( "$@" )
 
-# Main script.
-script_name=$(basename "$0")
+function starting_script() {
+  echo "Starting ${SCRIPT_NAME} script..."
+}
 
-setup_signal_handling
+function ending_script() {
+  echo "${SCRIPT_NAME} script completed successfully."
+}
 
-check_dependencies
+function source_utilities() {
+  local script_dir
+  script_dir="$(cd "${BASH_SOURCE[0]%/*}" && pwd)"
+  source "${script_dir}/test_utilities.sh"
+}
 
-echo "Starting ${script_name} script..."
+function main() {
+  source_utilities
 
-parse_command_line_arguments "$@"
+  setup_signal_handling
 
-run_tests
+  check_dependencies
 
-echo "${script_name} script completed successfully."
+  starting_script
+
+  if [[ ${#ARGS[@]} -eq 0 ]]; then
+    parse_command_line_arguments
+  else
+    parse_command_line_arguments "${ARGS[@]}"
+  fi
+
+  run_tests
+
+  ending_script
+}
+
+main

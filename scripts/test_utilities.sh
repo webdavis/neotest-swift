@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-PROJECT_ROOT="$(dirname "$(cd "${BASH_SOURCE[0]%/*}" && pwd)")"
-MINIMAL_INIT_FILE="${PROJECT_ROOT}/scripts/minimal_init.lua"
-LOG_FILE="${PROJECT_ROOT}/test_output.txt"
+project_root_folder="$(dirname "$(cd "${BASH_SOURCE[0]%/*}" && pwd)")"
+readonly PROJECT_ROOT="$project_root_folder"
+
+readonly MINIMAL_INIT_FILE="${PROJECT_ROOT}/scripts/minimal_init.lua"
+readonly LOG_FILE="${PROJECT_ROOT}/test_output.txt"
 
 function setup_signal_handling() {
   # Handle process interruption signals.
@@ -38,12 +40,13 @@ function check_dependencies() {
 }
 
 function parse_command_line_arguments() {
-  short='o:s:'
-  long='options:,scope:'
+  local short='o:s:'
+  local long='options:,scope:'
 
-  OPTIONS="$(getopt -o "$short" --long "$long" -- "$@")"
+  local options
+  options="$(getopt -o "$short" --long "$long" -- "$@")"
 
-  eval set -- "$OPTIONS"
+  eval set -- "$options"
 
   local test_scope plenary_options
 
@@ -81,7 +84,7 @@ function parse_command_line_arguments() {
     plenary_options="{ minimal_init = '$MINIMAL_INIT_FILE' }"
   fi
 
-  NVIM_COMMAND="PlenaryBustedDirectory ${test_scope} ${plenary_options}"
+  readonly NVIM_COMMAND="PlenaryBustedDirectory ${test_scope} ${plenary_options}"
 }
 
 function run_tests() {
