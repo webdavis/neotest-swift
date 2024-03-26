@@ -6,17 +6,17 @@ set -euo pipefail
 # Main script.
 function main() {
   # Include configuration and utility files.
-  local script_dir script_name
+  local script_dir
 
   script_dir="$(cd "${BASH_SOURCE[0]%/*}" && pwd)"
   source "${script_dir}/test_utilities.sh"
-
-  script_name=$(basename "$0")
 
   setup_signal_handling
 
   check_dependencies
 
+  local script_name
+  script_name=$(basename "$0")
   echo "Starting ${script_name} script..."
 
   readonly ARGS=( "$@" )
