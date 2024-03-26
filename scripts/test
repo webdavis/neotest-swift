@@ -16,7 +16,13 @@ check_dependencies
 
 echo "Starting ${script_name} script..."
 
-parse_command_line_arguments "$@"
+readonly ARGS=( "$@" )
+
+if [[ ${#ARGS[@]} -eq 0 ]]; then
+  parse_command_line_arguments
+else
+  parse_command_line_arguments "${ARGS[@]}"
+fi
 
 run_tests
 
