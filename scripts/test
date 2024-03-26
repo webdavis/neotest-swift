@@ -5,6 +5,7 @@ set -euo pipefail
 
 script_name_variable="$(basename "$0")"
 readonly SCRIPT_NAME="$script_name_variable"
+readonly ARGS=( "$@" )
 
 function starting_script() {
   echo "Starting ${SCRIPT_NAME} script..."
@@ -29,8 +30,6 @@ function main() {
 
   starting_script
 
-  readonly ARGS=( "$@" )
-
   if [[ ${#ARGS[@]} -eq 0 ]]; then
     parse_command_line_arguments
   else
@@ -42,4 +41,4 @@ function main() {
   ending_script
 }
 
-main "$@"
+main
