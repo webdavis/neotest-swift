@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-readonly PROJECT_ROOT="$(dirname "$(cd "${BASH_SOURCE[0]%/*}" && pwd)")"
+project_root_folder="$(dirname "$(cd "${BASH_SOURCE[0]%/*}" && pwd)")"
+readonly PROJECT_ROOT="$project_root_folder"
+
 readonly MINIMAL_INIT_FILE="${PROJECT_ROOT}/scripts/minimal_init.lua"
 readonly LOG_FILE="${PROJECT_ROOT}/test_output.txt"
 
